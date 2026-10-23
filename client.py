@@ -1,14 +1,22 @@
 import requests
 import traceback
 import json
+import os
 import sys
 
-URL = "PUT SECRET URL HERE"
+from dotenv import load_dotenv
+
+# Config.
+# The server address and password are read from DP_SERVER_URL and
+# DP_SERVER_PASSWORD, set in the environment or in .env next to this file.
+load_dotenv(os.path.join(os.path.dirname(os.path.abspath(__file__)), '.env'))
+SERVER_URL = os.environ.get("DP_SERVER_URL", "")
+PASSWORD = os.environ.get("DP_SERVER_PASSWORD", "")
 
 def help():
   print("This file exposes three functions: avg(...), count(...), and count0(...).")
   print("")
-  print("1) avg(target, keys, dp): computes the average of the target column grouped by the given keys")
+  print("1) avg(keys, target, dp): computes the average of the target column grouped by the given keys")
   print("      keys: list of strings: the columns to group the result by")
   print("      target: string: the column to compute the average over, must be a numeric column")
   print("      dp: boolean: True if the avg should be differentially private, False otherwise")
@@ -26,6 +34,9 @@ def help():
   print("4) 'music': string: the favorite music genre")
   print("5) 'programming': string: how long has the person been programming")
   print("6) 'sport': string: the favorite sport")
+  print("7) 'movies': string: how many movies the person watched this year, as a range")
+  print("8) 'videogames': string: the favorite kind of video games")
+  print("9) 'language': string: the favorite programming language")
   print("")
   print("You can import this file into your own python script using 'import client' and then use the above functions.")
   print("Alternatively, you can use run this file from the command line to explore the data , for example:")
@@ -35,6 +46,9 @@ def help():
 
 
 def _query(agg, keys, target, dp):
+  if SERVER_URL == "" or PASSWORD == "":
+    raise ValueError("Set DP_SERVER_URL and DP_SERVER_PASSWORD in .env (find them on Piazza, see README.md)")
+
   query = {
     "agg": agg,
     "keys": keys,
@@ -42,7 +56,8 @@ def _query(agg, keys, target, dp):
     "dp": dp
   }
   params = {"q": json.dumps(query)}
-  response = requests.get(url=URL, params=params)
+  url = "{}/{}".format(SERVER_URL.rstrip("/"), PASSWORD)
+  response = requests.get(url=url, params=params)
   if response.ok:
     return [tuple(row) for row in response.json()]
   raise ValueError("Error detected during query execution: {}".format(response.text))

@@ -30,8 +30,7 @@ def dp_histogram(epsilon):
 
   return headers, noised_rows
 
-# Plot the frequency of counts for the first group
-# (age 0 and Hip Hop).
+# Plot the frequency of counts for the first group in the result
 def plot(epsilon):
   ITERATIONS = 150
 
@@ -39,7 +38,7 @@ def plot(epsilon):
   d = {}
   for i in range(ITERATIONS):
     headers, rows = dp_histogram(epsilon)
-    # Get the value of the first row (age 0 and hip hop).
+    # Get the value of the first row.
     value = round(rows[0][-1])
     d[value] = d.get(value, 0) + 1
 
