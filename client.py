@@ -16,7 +16,7 @@ PASSWORD = os.environ.get("DP_SERVER_PASSWORD", "")
 def help():
   print("This file exposes three functions: avg(...), count(...), and count0(...).")
   print("")
-  print("1) avg(keys, target, dp): computes the average of the target column grouped by the given keys")
+  print("1) avg(keys, target, dp): computes the average of the target column grouped by the given keys, excluding data points with age = 0")
   print("      keys: list of strings: the columns to group the result by")
   print("      target: string: the column to compute the average over, must be a numeric column")
   print("      dp: boolean: True if the avg should be differentially private, False otherwise")

@@ -6,7 +6,7 @@ DS 593 in Fall 2026.
 See [https://ds593.babman.io/2026/assign/dp.html](https://ds593.babman.io/2026/assign/dp.html) for the assignment
 handout.
 
-#### This repo is tested with Python 3.14
+#### This assignment requires Python 3.14
 
 ## Setup
 
