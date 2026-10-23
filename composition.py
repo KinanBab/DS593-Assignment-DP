@@ -58,10 +58,10 @@ if __name__ == "__main__":
   print("")
   '''
   
-  # Expose the count of people per programming level.
+  # Expose the count of people per age group and programming level.
   '''
   print("Exposing count:")
-  headers, result = expose(lambda: count0(["programming"], True))
+  headers, result = expose(lambda: count0(["agegroup", "programming"], True))
   _pretty_print(headers, result)
   print("")
   '''
